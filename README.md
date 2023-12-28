@@ -11,7 +11,7 @@ Welcome to MLTemplates, a comprehensive collection of machine learning templates
 - **Visualization**: Tools for data and results visualization.
 
 ## How to Use
-1. Clone the repository: `git clone https://github.com/yourusername/MLTemplates.git`
+1. Clone the repository: `git clone https://github.com/yourusername/ML_Templates.git`
 2. Navigate to the desired template directory.
 3. Read the specific `README.md` in each directory for detailed instructions.
 
