@@ -1,0 +1,25 @@
+{
+  "recorded_utc": "2026-11-14T06:49:37.348871+00:00",
+  "kind": "animation_rendered_from_actual_command_output",
+  "pillow_version": "13.0.0",
+  "text_hash_normalization": "UTF-8 text with CRLF normalized to LF",
+  "source_sha256": {
+    "tabular_baseline.py": "c3a36db0a934263bae9cab681d6bd3eaca0de9bb7b0874a70275a53a819966c0",
+    "demo.py": "f1c23a7e1ecb559e7341815caa630eb01d30b6f66168f90eb44410896f408558",
+    "tests/test_baseline.py": "6c0c8ec5c9bb787c60d0d0adceed2cde1215cef9dc34e0d588bb20ff46921135",
+    "requirements.txt": "77286c421c7d1050d73266d223118cdba339e9392f5a5b9d0189d14e12d986c3",
+    "scripts/record_demo.py": "aef46c4fc59dfa617277c2e1fc92172b591b7ee9943cb2d34834bab9584f0462"
+  },
+  "commands": [
+    {
+      "command": "python demo.py",
+      "exit_code": 0,
+      "output": "ML Templates | real training on synthetic data\nRows: 400 | train: 300 | holdout: 100\nNumeric + categorical features; missing values handled inside CV folds.\nSelect C using 3-fold training average precision; holdout stays separate.\nSelected C: 0.1\nTraining CV average precision: 0.8228\nHoldout average precision: 0.8653\nHoldout positive rate: 0.2100\nHoldout ROC AUC: 0.9343\nHoldout balanced accuracy at 0.5: 0.8366\nConfusion matrix [0, 1]: [[72, 7], [5, 16]]\nSynthetic demonstration only; these scores are not real-world validation.\n"
+    },
+    {
+      "command": "python -m unittest discover -s tests",
+      "exit_code": 0,
+      "output": "................\n----------------------------------------------------------------------\nRan 16 tests in 8.458s\n\nOK\n"
+    }
+  ]
+}
