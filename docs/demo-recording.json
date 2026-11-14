@@ -1,12 +1,12 @@
 {
-  "recorded_utc": "2026-11-14T06:42:47.611888+00:00",
+  "recorded_utc": "2026-11-14T06:45:27.312560+00:00",
   "kind": "animation_rendered_from_actual_command_output",
   "pillow_version": "13.0.0",
   "text_hash_normalization": "UTF-8 text with CRLF normalized to LF",
   "source_sha256": {
-    "tabular_baseline.py": "9eff307a606f90760e135adb61b2a08a8e84c3679447fac5deb90b40df843d3b",
+    "tabular_baseline.py": "c3a36db0a934263bae9cab681d6bd3eaca0de9bb7b0874a70275a53a819966c0",
     "demo.py": "f1c23a7e1ecb559e7341815caa630eb01d30b6f66168f90eb44410896f408558",
-    "tests/test_baseline.py": "377639a45cedd652691c3c275abbc4f76352a067354bda3398bc400ab4c06ccc",
+    "tests/test_baseline.py": "7aa437e37a9578b2c9565640cbc418b6ea8c2469b988352666c777a0d1deeaa5",
     "requirements.txt": "77286c421c7d1050d73266d223118cdba339e9392f5a5b9d0189d14e12d986c3",
     "scripts/record_demo.py": "aef46c4fc59dfa617277c2e1fc92172b591b7ee9943cb2d34834bab9584f0462"
   },
@@ -19,7 +19,7 @@
     {
       "command": "python -m unittest discover -s tests",
       "exit_code": 0,
-      "output": "..............\n----------------------------------------------------------------------\nRan 14 tests in 8.305s\n\nOK\n"
+      "output": "................\n----------------------------------------------------------------------\nRan 16 tests in 8.511s\n\nOK\n"
     }
   ]
 }

@@ -31,7 +31,7 @@ You can also call `.venv/bin/python` or `.venv\Scripts\python.exe` directly with
 
 ## Bring a CSV
 
-For a table with independent rows and a target column containing both `0` and `1`:
+For a table with independent rows and a target column containing both numeric labels `0` and `1` (boolean targets are rejected):
 
 ```bash
 python tabular_baseline.py --csv your_table.csv --target outcome
@@ -39,7 +39,7 @@ python tabular_baseline.py --csv your_table.csv --target outcome
 
 The CLI prints a JSON report to stdout; it does not save models, upload rows or create an experiment-tracking account. Redirect stdout if you want a local report. Files are limited to 20 MiB, 100,000 rows and 200 columns. Headers must be unique and nonempty. Invalid inputs exit `2` with a generic JSON error that does not echo file contents; argument usage errors also exit `2`.
 
-Features can be numeric or string categories, with missing values. Complex numbers, infinity, dates, boolean feature columns and mixed object types are rejected. Convert these intentionally for your problem first. Missing numeric values use the training median; missing categories use `__missing__`. That literal is reserved for missing categories. Entirely missing numeric features are retained with zero imputation. Unseen categories are ignored at transformation time.
+Features can be numeric or string categories, with missing values. Complex numbers, infinity, dates, boolean feature columns and mixed object types are rejected. Convert these intentionally for your problem first. Missing numeric values use the training median; missing categories use `__missing__`. That literal is reserved and rejected in supplied categories to avoid collisions. Entirely missing numeric features are retained with zero imputation. Unseen categories are ignored at transformation time.
 
 For Python use:
 

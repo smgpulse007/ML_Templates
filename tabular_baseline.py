@@ -37,7 +37,8 @@ def _validate(frame: pd.DataFrame, target: str):
     if target not in frame or len(frame.columns) < 2:
         raise ValueError("target must exist alongside at least one feature column")
     y = frame[target]
-    if y.isna().any() or set(y.unique()) != {0, 1}:
+    if (y.isna().any() or any(isinstance(value, (bool, np.bool_)) for value in y)
+            or set(y.unique()) != {0, 1}):
         raise ValueError("target must contain both binary labels 0 and 1, without missing values")
     features = frame.drop(columns=[target]).copy()
     numeric, categorical = [], []
@@ -57,6 +58,8 @@ def _validate(frame: pd.DataFrame, target: str):
             present = [v for v in values if not pd.isna(v)]
             if any(not isinstance(v, str) for v in present):
                 raise ValueError("categorical features must contain strings or missing values")
+            if "__missing__" in present:
+                raise ValueError("the category __missing__ is reserved for missing values")
             features[name] = values
             categorical.append(name)
     return features, y.to_numpy(dtype=np.int64), numeric, categorical

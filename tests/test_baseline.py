@@ -63,6 +63,21 @@ class BaselineTests(unittest.TestCase):
         self.assertTrue(any(len(rows) < len(training) for rows in fitted_rows))
         self.assertIn(training, fitted_rows)  # Final refit uses the complete training split.
 
+    def test_holdout_changes_cannot_change_selection_or_fitted_model(self):
+        frame = synthetic_data(rows=120)
+        original = run_experiment(frame, "outcome")
+        altered = frame.copy(deep=True)
+        altered.loc[original.test_positions, "feature_0"] = 1e9
+        altered.loc[original.test_positions, "channel"] = "only_in_changed_holdout"
+        changed = run_experiment(altered, "outcome")
+        self.assertEqual(original.search.best_params_, changed.search.best_params_)
+        self.assertEqual(original.search.best_score_, changed.search.best_score_)
+        one = original.search.best_estimator_.named_steps["model"]
+        two = changed.search.best_estimator_.named_steps["model"]
+        np.testing.assert_array_equal(one.coef_, two.coef_)
+        np.testing.assert_array_equal(one.intercept_, two.intercept_)
+        np.testing.assert_array_equal(original.train_positions, changed.train_positions)
+
     def test_report_matches_actual_heldout_predictions(self):
         frame = synthetic_data(rows=120)
         result = run_experiment(frame, "outcome")
@@ -126,6 +141,13 @@ class BaselineTests(unittest.TestCase):
             frame = good.assign(bad=value)
             with self.subTest(value=value), self.assertRaises(ValueError):
                 run_experiment(frame, "outcome")
+
+    def test_reserved_category_and_boolean_target_rejected(self):
+        frame = synthetic_data(rows=50)
+        with self.assertRaisesRegex(ValueError, "reserved"):
+            run_experiment(frame.assign(channel="__missing__"), "outcome")
+        with self.assertRaisesRegex(ValueError, "binary labels"):
+            run_experiment(frame.assign(outcome=frame.outcome.astype(bool)), "outcome")
 
     def test_invalid_controls_and_small_classes(self):
         good = synthetic_data(rows=50)
