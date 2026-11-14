@@ -35,8 +35,8 @@ class BaselineTests(unittest.TestCase):
         frame = synthetic_data(rows=120)
         train, test = train_test_split(np.arange(len(frame)), test_size=0.25,
                                        stratify=frame.outcome, random_state=42)
-        frame.loc[test, "feature_0"] = 1e9
-        frame.loc[test, "channel"] = "holdout_only"
+        frame.iloc[test, frame.columns.get_loc("feature_0")] = 1e9
+        frame.iloc[test, frame.columns.get_loc("channel")] = "holdout_only"
         result = run_experiment(frame, "outcome")
         prep = result.search.best_estimator_.named_steps["preprocess"]
         median = prep.named_transformers_["numeric"].named_steps["impute"].statistics_[0]
@@ -65,10 +65,11 @@ class BaselineTests(unittest.TestCase):
 
     def test_holdout_changes_cannot_change_selection_or_fitted_model(self):
         frame = synthetic_data(rows=120)
+        frame.index = [f"record-{i}" for i in range(len(frame))]
         original = run_experiment(frame, "outcome")
         altered = frame.copy(deep=True)
-        altered.loc[original.test_positions, "feature_0"] = 1e9
-        altered.loc[original.test_positions, "channel"] = "only_in_changed_holdout"
+        altered.iloc[original.test_positions, altered.columns.get_loc("feature_0")] = 1e9
+        altered.iloc[original.test_positions, altered.columns.get_loc("channel")] = "only_in_changed_holdout"
         changed = run_experiment(altered, "outcome")
         self.assertEqual(original.search.best_params_, changed.search.best_params_)
         self.assertEqual(original.search.best_score_, changed.search.best_score_)
